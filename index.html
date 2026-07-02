@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yusri Rizqi — Portfolio Belajar JavaScript</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #12151c;
+      --bg-alt: #161a23;
+      --surface: #1c212c;
+      --surface-2: #232938;
+      --border: #2b3143;
+      --text: #edebe3;
+      --text-muted: #9098ac;
+      --text-faint: #5b6478;
+      --amber: #e8a23d;
+      --teal: #4fb8a6;
+      --rose: #e1667a;
+      --radius: 10px;
+      --maxw: 1100px;
+      --font-display: 'Fraunces', serif;
+      --font-body: 'Inter', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img,
+    svg {
+      display: block;
+      max-width: 100%;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .wrap {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    section {
+      padding: 96px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    section:last-of-type {
+      border-bottom: none;
+    }
+
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--teal);
+      letter-spacing: 0.06em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 14px;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 18px;
+      height: 1px;
+      background: var(--teal);
+      display: inline-block;
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-family: var(--font-display);
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .section-title {
+      font-size: clamp(1.7rem, 3.4vw, 2.5rem);
+      margin-bottom: 16px;
+    }
+
+    .section-sub {
+      color: var(--text-muted);
+      max-width: 60ch;
+      margin: 0 0 48px;
+    }
+
+    code,
+    .mono {
+      font-family: var(--font-mono);
+    }
+
+    /* ---------- NAV ---------- */
+    header.nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(18, 21, 28, 0.85);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-family: var(--font-mono);
+      font-size: 0.95rem;
+      color: var(--text);
+      letter-spacing: 0.01em;
+    }
+
+    .logo span {
+      color: var(--amber);
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 8px;
+      height: 1em;
+      background: var(--teal);
+      margin-left: 2px;
+      animation: blink 1.1s steps(1) infinite;
+      vertical-align: text-bottom;
+    }
+
+    @keyframes blink {
+      50% {
+        opacity: 0;
+      }
+    }
+
+    nav.links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    nav.links a {
+      font-size: 0.9rem;
+      text-decoration: none;
+      color: var(--text-muted);
+      transition: color .2s ease;
+    }
+
+    nav.links a:hover,
+    nav.links a:focus-visible {
+      color: var(--amber);
+    }
+
+    .burger {
+      display: none;
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      width: 38px;
+      height: 38px;
+      color: var(--text);
+      font-family: var(--font-mono);
+      cursor: pointer;
+    }
+
+    /* ---------- TERMINAL WINDOW (shared) ---------- */
+    .terminal {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: 0 24px 60px -30px rgba(0, 0, 0, 0.6);
+    }
+
+    .terminal-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 16px;
+      background: var(--surface-2);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .dot.rose {
+      background: var(--rose);
+    }
+
+    .dot.amber {
+      background: var(--amber);
+    }
+
+    .dot.teal {
+      background: var(--teal);
+    }
+
+    .terminal-title {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--text-faint);
+      margin-left: 6px;
+    }
+
+    .terminal-body {
+      padding: 26px 24px;
+      font-family: var(--font-mono);
+      font-size: 0.95rem;
+    }
+
+    /* ---------- HERO ---------- */
+    .hero {
+      padding-top: 72px;
+    }
+
+    .hero .wrap {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 56px;
+      align-items: center;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--amber);
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.3rem, 4.8vw, 3.6rem);
+      line-height: 1.12;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--teal);
+      font-weight: 500;
+    }
+
+    .hero p.lead {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      max-width: 48ch;
+      margin: 22px 0 34px;
+    }
+
+    .cta-row {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 22px;
+      border-radius: 8px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      text-decoration: none;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: transform .15s ease, background .2s ease, border-color .2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      background: var(--amber);
+      color: #1a1406;
+    }
+
+    .btn-primary:hover {
+      background: #f0ad4e;
+    }
+
+    .btn-ghost {
+      border-color: var(--border);
+      color: var(--text);
+      background: transparent;
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--teal);
+      color: var(--teal);
+    }
+
+    .hero-term .line {
+      margin: 0 0 10px;
+      white-space: pre-wrap;
+    }
+
+    .hero-term .prompt {
+      color: var(--teal);
+    }
+
+    .hero-term .out {
+      color: var(--text-muted);
+    }
+
+    .hero-term .plus {
+      color: var(--teal);
+    }
+
+    .hero-term .minus {
+      color: var(--rose);
+    }
+
+    #typed-cursor {
+      display: inline-block;
+      width: 8px;
+      height: 1em;
+      background: var(--text);
+      margin-left: 2px;
+      animation: blink 1s steps(1) infinite;
+      vertical-align: text-bottom;
+    }
+
+    /* ---------- ABOUT ---------- */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 56px;
+      align-items: start;
+    }
+
+    .about-grid p {
+      color: var(--text-muted);
+    }
+
+    .about-grid p strong {
+      color: var(--text);
+    }
+
+    .profile-code .terminal-body {
+      font-size: 0.88rem;
+      line-height: 1.8;
+    }
+
+    .k {
+      color: var(--amber);
+    }
+
+    .s {
+      color: var(--teal);
+    }
+
+    .p {
+      color: var(--text-faint);
+    }
+
+    /* ---------- SKILLS ---------- */
+    .skill-groups {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .skill-group h3 {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--text-faint);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 14px;
+    }
+
+    .badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .badge {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      color: var(--text);
+      background: var(--surface);
+    }
+
+    .badge.learning {
+      border-color: var(--amber);
+      color: var(--amber);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .pulse {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--amber);
+      animation: pulse 1.6s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.3;
+      }
+    }
+
+    /* ---------- JOURNEY (signature) ---------- */
+    .journey-term .terminal-body {
+      padding: 8px 0 20px;
+    }
+
+    .journey-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .journey-item {
+      display: grid;
+      grid-template-columns: 28px 90px 1fr auto;
+      gap: 16px;
+      align-items: start;
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--border);
+      transition: background .2s ease;
+    }
+
+    .journey-item:last-child {
+      border-bottom: none;
+    }
+
+    .journey-item:hover {
+      background: var(--surface-2);
+    }
+
+    .journey-item input[type="checkbox"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      margin-top: 3px;
+      border: 1px solid var(--text-faint);
+      border-radius: 4px;
+      cursor: pointer;
+      position: relative;
+      background: transparent;
+    }
+
+    .journey-item input[type="checkbox"]:checked {
+      background: var(--teal);
+      border-color: var(--teal);
+    }
+
+    .journey-item input[type="checkbox"]:checked::after {
+      content: "✓";
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      color: #0c1712;
+      font-weight: 700;
+    }
+
+    .journey-item input[type="checkbox"]:focus-visible {
+      outline: 2px solid var(--amber);
+      outline-offset: 2px;
+    }
+
+    .hash {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--text-faint);
+      margin-top: 4px;
+    }
+
+    .journey-main .day-label {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--amber);
+      margin-bottom: 4px;
+    }
+
+    .journey-main h4 {
+      margin: 0 0 4px;
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
+    .journey-main p {
+      margin: 0;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .status {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--text-faint);
+      white-space: nowrap;
+      margin-top: 4px;
+    }
+
+    .journey-item.done .journey-main h4 {
+      color: var(--text-muted);
+      text-decoration: line-through;
+      text-decoration-color: var(--text-faint);
+    }
+
+    .journey-item.done .status {
+      color: var(--teal);
+    }
+
+    .progress-line {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 22px;
+    }
+
+    .progress-line b {
+      color: var(--teal);
+    }
+
+    /* ---------- PROJECTS ---------- */
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      transition: transform .18s ease, border-color .18s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: var(--teal);
+    }
+
+    .card-top {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .lang-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--amber);
+    }
+
+    .card-top span {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .card h4 {
+      font-family: var(--font-body);
+      font-size: 1.05rem;
+      margin: 0 0 8px;
+    }
+
+    .card p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin: 0 0 16px;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 18px;
+    }
+
+    .tag {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      padding: 4px 9px;
+      border-radius: 5px;
+      background: var(--surface-2);
+      color: var(--text-faint);
+    }
+
+    .card-links {
+      display: flex;
+      gap: 16px;
+    }
+
+    .card-links a {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      text-decoration: none;
+      color: var(--teal);
+      border-bottom: 1px solid transparent;
+    }
+
+    .card-links a:hover {
+      border-color: var(--teal);
+    }
+
+    .card.ghost {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-style: dashed;
+      color: var(--text-faint);
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      min-height: 180px;
+      text-align: center;
+    }
+
+    /* ---------- CONTACT ---------- */
+    .contact-inner {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 32px;
+    }
+
+    .contact-links {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .contact-links a {
+      font-family: var(--font-mono);
+      font-size: 0.95rem;
+      text-decoration: none;
+      color: var(--text);
+      padding-bottom: 2px;
+      border-bottom: 1px solid var(--border);
+      transition: border-color .2s ease, color .2s ease;
+    }
+
+    .contact-links a:hover {
+      color: var(--amber);
+      border-color: var(--amber);
+    }
+
+    footer {
+      padding: 32px 0 48px;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--text-faint);
+    }
+
+    footer .wrap {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    /* ---------- REVEAL ---------- */
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+
+    .reveal.in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width:860px) {
+      .hero .wrap {
+        grid-template-columns: 1fr;
+      }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+
+      nav.links {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        gap: 0;
+        background: var(--bg-alt);
+        border-bottom: 1px solid var(--border);
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height .25s ease;
+      }
+
+      nav.links.open {
+        max-height: 320px;
+      }
+
+      nav.links a {
+        padding: 14px 24px;
+        display: block;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .burger {
+        display: block;
+      }
+
+      .journey-item {
+        grid-template-columns: 22px 1fr;
+      }
+
+      .hash,
+      .status {
+        grid-column: 2;
+        margin-top: 0;
+      }
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+      * {
+        animation-duration: 0.001ms !important;
+        transition-duration: 0.001ms !important;
+      }
+
+      html {
+        scroll-behavior: auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="nav">
+    <div class="nav-inner">
+      <div class="logo">yusri/portfolio<span class="cursor"></span></div>
+      <nav class="links" id="navLinks">
+        <a href="#about">Tentang</a>
+        <a href="#skills">Skills</a>
+        <a href="#journey">Progress</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Kontak</a>
+      </nav>
+      <button class="burger" id="burgerBtn" aria-label="Buka menu" aria-expanded="false">☰</button>
+    </div>
+  </header>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <div class="hero-eyebrow">// day 0 — mulai belajar</div>
+        <h1>Halo, aku <em>Yusri</em>.<br>Sedang belajar JavaScript.</h1>
+        <p class="lead">Portfolio ini mencatat perjalanan belajar JavaScript saya selama 7 hari — dari variabel dan
+          loop, sampai async/await dan project nyata. Setiap hari, satu commit baru.</p>
+        <div class="cta-row">
+          <a href="#journey" class="btn btn-primary">Lihat progress belajar</a>
+          <a href="#projects" class="btn btn-ghost">Lihat project</a>
+        </div>
+      </div>
+
+      <div class="terminal hero-term">
+        <div class="terminal-bar">
+          <span class="dot rose"></span><span class="dot amber"></span><span class="dot teal"></span>
+          <span class="terminal-title">portfolio.js — zsh</span>
+        </div>
+        <div class="terminal-body" id="heroTerminal"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ABOUT ===== -->
+  <section id="about">
+    <div class="wrap">
+      <div class="eyebrow">tentang</div>
+      <h2 class="section-title reveal">Sedikit tentang saya</h2>
+      <div class="about-grid">
+        <p class="reveal">
+          Tulis bio singkat kamu di sini — misalnya: <strong>Halo! Saya sedang belajar web development, dimulai dari
+            JavaScript.</strong>
+          Ceritakan kenapa kamu belajar coding, latar belakang kamu (pelajar/mahasiswa/career switcher),
+          dan apa yang ingin kamu capai setelah 7 hari ini. Dua sampai tiga kalimat sudah cukup —
+          yang penting jujur dan terasa seperti kamu.
+        </p>
+        <div class="terminal profile-code reveal">
+          <div class="terminal-bar">
+            <span class="dot rose"></span><span class="dot amber"></span><span class="dot teal"></span>
+            <span class="terminal-title">profile.js</span>
+          </div>
+          <div class="terminal-body">
+            <span class="p">const</span> profile = {<br>
+            &nbsp;&nbsp;<span class="k">name</span>: <span class="s">"Nama Kamu"</span>,<br>
+            &nbsp;&nbsp;<span class="k">role</span>: <span class="s">"Beginner → JS Developer"</span>,<br>
+            &nbsp;&nbsp;<span class="k">learning</span>: <span class="s">"JavaScript"</span>,<br>
+            &nbsp;&nbsp;<span class="k">durasi</span>: <span class="s">"7 hari"</span>,<br>
+            &nbsp;&nbsp;<span class="k">status</span>: <span class="s">"in_progress"</span><br>
+            };
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SKILLS ===== -->
+  <section id="skills">
+    <div class="wrap">
+      <div class="eyebrow">skills</div>
+      <h2 class="section-title reveal">Yang sudah &amp; sedang dipelajari</h2>
+      <p class="section-sub reveal">Daftar ini akan bertambah tiap hari. Update badge di bawah setiap kali kamu
+        menyelesaikan materi baru.</p>
+      <div class="skill-groups reveal">
+        <div class="skill-group">
+          <h3>Fondasi</h3>
+          <div class="badges">
+            <span class="badge">HTML</span>
+            <span class="badge">CSS</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3>Bahasa Pemrograman</h3>
+          <div class="badges">
+            <span class="badge">JavaScript (ES6+)</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3>Tools</h3>
+          <div class="badges">
+            <span class="badge">Git</span>
+            <span class="badge">GitHub</span>
+            <span class="badge">VS Code</span>
+            <span class="badge">Chrome DevTools</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3>Sedang dipelajari</h3>
+          <div class="badges">
+            <span class="badge learning"><span class="pulse"></span>DOM Manipulation</span>
+            <span class="badge learning"><span class="pulse"></span>Async / Fetch API</span>
+            <span class="badge learning"><span class="pulse"></span>OOP di JavaScript</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== JOURNEY (signature: commit log) ===== -->
+  <section id="journey">
+    <div class="wrap">
+      <div class="eyebrow">progress</div>
+      <h2 class="section-title reveal">Learning journey — 7 hari</h2>
+      <p class="section-sub reveal">Ditulis seperti git log: satu hari, satu "commit" belajar. Centang tiap hari yang
+        sudah selesai.</p>
+
+      <div class="terminal journey-term reveal">
+        <div class="terminal-bar">
+          <span class="dot rose"></span><span class="dot amber"></span><span class="dot teal"></span>
+          <span class="terminal-title">git log --oneline learning-journey</span>
+        </div>
+        <div class="terminal-body">
+          <ul class="journey-list" id="journeyList">
+            <li class="journey-item">
+              <input type="checkbox" aria-label="Tandai Hari 1 selesai">
+              <div class="hash">#a1f9c2</div>
+              <div class="journey-main">
+                <div class="day-label">HARI 1</div>
+                <h4>Dasar-dasar JavaScript</h4>
+                <p>Variabel, tipe data, operator, percabangan, perulangan.</p>
+              </div>
+              <div class="status">belum</div>
+            </li>
+            <li class="journey-item">
+              <input type="checkbox" aria-label="Tandai Hari 2 selesai">
+              <div class="hash">#b3d81e</div>
+              <div class="journey-main">
+                <div class="day-label">HARI 2</div>
+                <h4>Function, Array &amp; Object</h4>
+                <p>Function, scope, array methods, destructuring, spread/rest.</p>
+              </div>
+              <div class="status">belum</div>
+            </li>
+            <li class="journey-item">
+              <input type="checkbox" aria-label="Tandai Hari 3 selesai">
+              <div class="hash">#c7091a</div>
+              <div class="journey-main">
+                <div class="day-label">HARI 3</div>
+                <h4>DOM &amp; Event Handling</h4>
+                <p>Manipulasi DOM, event listener, form &amp; validasi — bikin To-Do List App.</p>
+              </div>
+              <div class="status">belum</div>
+            </li>
+            <li class="journey-item">
+              <input type="checkbox" aria-label="Tandai Hari 4 selesai">
+              <div class="hash">#d452f7</div>
+              <div class="journey-main">
+                <div class="day-label">HARI 4</div>
+                <h4>Asynchronous JavaScript</h4>
+                <p>Callback, Promise, async/await, fetch API — bikin Weather/Quotes App.</p>
+              </div>
+              <div class="status">belum</div>
+            </li>
+            <li class="journey-item">
+              <input type="checkbox" aria-label="Tandai Hari 5 selesai">
+              <div class="hash">#e0a63b</div>
+              <div class="journey-main">
+                <div class="day-label">HARI 5</div>
+                <h4>OOP &amp; ES6+ Modern JS</h4>
+                <p>Class, inheritance, template literal, localStorage — bikin Expense Tracker.</p>
+              </div>
+              <div class="status">belum</div>
+            </li>
+            <li class="journey-item">
+              <input type="checkbox" aria-label="Tandai Hari 6 selesai">
+              <div class="hash">#f18c05</div>
+              <div class="journey-main">
+                <div class="day-label">HARI 6</div>
+                <h4>Git, GitHub &amp; Deploy</h4>
+                <p>Push semua project ke GitHub, deploy portfolio ke GitHub Pages.</p>
+              </div>
+              <div class="status">belum</div>
+            </li>
+            <li class="journey-item">
+              <input type="checkbox" aria-label="Tandai Hari 7 selesai">
+              <div class="hash">#0af921</div>
+              <div class="journey-main">
+                <div class="day-label">HARI 7</div>
+                <h4>Review &amp; Finalisasi</h4>
+                <p>Latihan soal, polish portfolio, rencana belajar selanjutnya.</p>
+              </div>
+              <div class="status">belum</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <p class="progress-line"><b id="progressCount">0</b> / 7 hari selesai</p>
+    </div>
+  </section>
+
+  <!-- ===== PROJECTS ===== -->
+  <section id="projects">
+    <div class="wrap">
+      <div class="eyebrow">projects</div>
+      <h2 class="section-title reveal">Project selama belajar</h2>
+      <p class="section-sub reveal">Ganti judul, deskripsi, dan link di bawah dengan project asli kamu setiap kali
+        selesai membuatnya.</p>
+      <div class="project-grid reveal">
+        <div class="card">
+          <div class="card-top"><span class="lang-dot"></span><span>JavaScript</span></div>
+          <h4>to-do-list-app</h4>
+          <p>To-Do List interaktif langsung di browser — latihan DOM manipulation &amp; event listener. (Project Hari 3)
+          </p>
+          <div class="tag-row"><span class="tag">HTML</span><span class="tag">CSS</span><span
+              class="tag">JavaScript</span></div>
+          <div class="card-links">
+            <a href="#">Live demo →</a>
+            <a href="#">GitHub →</a>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-top"><span class="lang-dot" style="background:var(--teal)"></span><span>JavaScript</span>
+          </div>
+          <h4>weather-app</h4>
+          <p>Cek cuaca kota mana pun pakai API publik — latihan fetch, async/await &amp; error handling. (Project Hari
+            4)</p>
+          <div class="tag-row"><span class="tag">JavaScript</span><span class="tag">Fetch API</span><span
+              class="tag">Async/Await</span></div>
+          <div class="card-links">
+            <a href="#">Live demo →</a>
+            <a href="#">GitHub →</a>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-top"><span class="lang-dot" style="background:var(--rose)"></span><span>JavaScript</span>
+          </div>
+          <h4>expense-tracker</h4>
+          <p>Catat pemasukan &amp; pengeluaran, tersimpan di browser — latihan OOP &amp; localStorage. (Project Hari 5)
+          </p>
+          <div class="tag-row"><span class="tag">JavaScript</span><span class="tag">OOP</span><span
+              class="tag">LocalStorage</span></div>
+          <div class="card-links">
+            <a href="#">Live demo →</a>
+            <a href="#">GitHub →</a>
+          </div>
+        </div>
+        <div class="card ghost">+ Tambah project kamu berikutnya di sini</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CONTACT ===== -->
+  <section id="contact">
+    <div class="wrap">
+      <div class="eyebrow">kontak</div>
+      <h2 class="section-title reveal">Hubungi saya</h2>
+      <div class="contact-inner reveal">
+        <p class="section-sub" style="margin-bottom:0;">Terbuka untuk kolaborasi, masukan, atau sekadar ngobrol soal
+          belajar coding.</p>
+        <div class="contact-links">
+          <a href="mailto:emailkamu@example.com">Email</a>
+          <a href="https://github.com/username-kamu" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://linkedin.com/in/username-kamu" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <span>© <span id="year"></span> Nama Kamu — dibangun sambil belajar coding.</span>
+      <span>// 7 hari, banyak console.log(), dan kopi.</span>
+    </div>
+  </footer>
+
+  <script>
+    // ---- Mobile nav toggle ----
+    const burger = document.getElementById('burgerBtn');
+    const navLinks = document.getElementById('navLinks');
+    burger.addEventListener('click', () => {
+      const isOpen = navLinks.classList.toggle('open');
+      burger.setAttribute('aria-expanded', isOpen);
+    });
+    navLinks.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => navLinks.classList.remove('open'));
+    });
+
+    // ---- Footer year ----
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // ---- Journey checklist progress ----
+    const checkboxes = document.querySelectorAll('#journeyList input[type="checkbox"]');
+    const progressCount = document.getElementById('progressCount');
+    function updateProgress() {
+      let done = 0;
+      checkboxes.forEach(cb => {
+        const item = cb.closest('.journey-item');
+        const statusEl = item.querySelector('.status');
+        if (cb.checked) {
+          item.classList.add('done');
+          statusEl.textContent = 'selesai';
+          done++;
+        } else {
+          item.classList.remove('done');
+          statusEl.textContent = 'belum';
+        }
+      });
+      progressCount.textContent = done;
+    }
+    checkboxes.forEach(cb => cb.addEventListener('change', updateProgress));
+    updateProgress();
+
+    // ---- Hero typing effect ----
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const heroLines = [
+      { text: '$ whoami', cls: 'prompt' },
+      { text: '> Nama Kamu', cls: 'out' },
+      { text: '$ cat mission.txt', cls: 'prompt' },
+      { text: '> Belajar JavaScript dari nol sampai jago dalam 7 hari 🚀', cls: 'out' },
+      { text: '+ console.log("semangat belajar!");', cls: 'plus' },
+    ];
+    const heroTerminal = document.getElementById('heroTerminal');
+
+    function renderInstant() {
+      heroTerminal.innerHTML = heroLines
+        .map(l => `<p class="line ${l.cls}">${l.text}</p>`)
+        .join('');
+    }
+
+    async function typeLines() {
+      for (const line of heroLines) {
+        const p = document.createElement('p');
+        p.className = 'line ' + line.cls;
+        heroTerminal.appendChild(p);
+        for (let i = 0; i < line.text.length; i++) {
+          p.textContent = line.text.slice(0, i + 1);
+          await new Promise(r => setTimeout(r, 18));
+        }
+        await new Promise(r => setTimeout(r, 180));
+      }
+    }
+
+    if (reduceMotion) {
+      renderInstant();
+    } else {
+      typeLines();
+    }
+
+    // ---- Scroll reveal ----
+    const revealEls = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window && !reduceMotion) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      revealEls.forEach(el => io.observe(el));
+    } else {
+      revealEls.forEach(el => el.classList.add('in'));
+    }
+  </script>
+
+</body>
+
+</html>
