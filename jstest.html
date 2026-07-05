@@ -1,0 +1,32 @@
+<html>
+
+<head>
+    <title>My JavaScript Test</title>
+</head>
+
+<body>
+    <h1>JavaScript Test Page</h1>
+    <p>This is a simple test page for JavaScript.</p>
+    <script>
+        let todos = [];
+
+        function tambahTodo(teks) {
+            todos.push(teks);
+        }
+
+        function tampilkanTodo() {
+            todos.forEach(function (todo) {
+                console.log("- " + todo);
+            });
+        }
+
+        tambahTodo("Belajar function");
+        tambahTodo("Beli susu");
+        tambahTodo("Nonton tutorial JS");
+        tambahTodo("Mengerjakan tugas");
+        tambahTodo("Membaca buku");
+        tampilkanTodo();
+    </script>
+</body>
+
+</html>
